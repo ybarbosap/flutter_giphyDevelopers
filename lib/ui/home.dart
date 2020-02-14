@@ -74,11 +74,12 @@ class _HomeState extends State<Home> {
                       fontSize: 18.0,
                     ),
                     textAlign: TextAlign.center,
-                    onSubmitted: (text) {
-                      setState(() {
-                        _search = text;
-                      });
-                    },
+                    onChanged: (text) => setState(() {
+                      _search = text;
+                    }),
+                    onSubmitted: (text) => setState(() {
+                      _search = text;
+                    }),
                   ),
                 ),
               ],
@@ -112,12 +113,6 @@ class _HomeState extends State<Home> {
     );
   }
 
-  // -----
-  // Caso _search == null retorna tamanho de data e mostra os trendind top
-  // Caso _search +! null, ou seja, uma pesquisa foi feita, retorna o tamanaho
-  // de date +1 para que dentro do contexto possa usar essa logica para
-  // mostrar 1 botão de carregar mais no fim da lista de gifs. O itemCount
-  // tera 1 a mais que o tamnaho de data
   int _getCount(List data) {
     if (_search == '') {
       return data.length;
@@ -136,8 +131,6 @@ class _HomeState extends State<Home> {
       ),
       itemCount: _getCount(snapshot.data['data']),
       itemBuilder: (context, index) {
-        // GestureDetector permite que a imagem seja clicada
-        // assim podendo ter uma ação para o clic
         if (_search == '' || index < snapshot.data['data'].length) {
           return GestureDetector(
             child: FadeInImage.memoryNetwork(
